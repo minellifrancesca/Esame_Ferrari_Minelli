@@ -21,7 +21,7 @@ array[1..num_teachers, 1..num_days] of var Slots: last_slot_nomi; % The allocate
 constraint
 forall(i in 1..num_teachers) (
   forall(d in 1..num_days)(
-       if teacher_availability[i, d] != {}  /\ starting_slot[i,d] != 0 /\ last_slot[i,d] != 0 then (last_slot[i, d] = starting_slot[i, d] + lesson_durations[i] - 1) \/ (last_slot[i,d] = 0 /\ starting_slot[i,d] = 0)  endif
+       if teacher_availability[i, d] != {}  then (last_slot[i, d] = starting_slot[i, d] + lesson_durations[i] - 1) \/ (last_slot[i,d] = 0 /\ starting_slot[i,d] = 0)  endif
 ));
 
 constraint
