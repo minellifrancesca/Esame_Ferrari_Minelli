@@ -16,7 +16,7 @@ array[1..num_teachers, 1..num_days] of var 0..num_slots: starting_slot; % The al
 array[1..num_teachers, 1..num_days] of var 0..num_slots: last_slot; % The allocated ending slot
 array[1..num_teachers, 1..num_days] of var Slots: starting_slot_nomi; % The allocated starting slot
 array[1..num_teachers, 1..num_days] of var Slots: last_slot_nomi; % The allocated ending slot
-
+  
 %Assignments of slots
 constraint
 forall(i in 1..num_teachers) (
@@ -47,8 +47,9 @@ starting_slot[i,d]= 0 <-> last_slot[i,d]=0));
 constraint 
 forall(i in 1..num_teachers) (
 forall(d in 1..num_days)(
-      if teacher_availability[i, d] != {}  /\ starting_slot[i,d] != 0 /\ last_slot[i,d] != 0 then ( starting_slot[i, d] in teacher_availability[i, d] /\ last_slot[i, d] in teacher_availability[i, d]) endif
-));
+forall(j in 0..lesson_durations[i])(
+      if teacher_availability[i, d] != {}  /\ starting_slot[i,d] != 0 /\ last_slot[i,d] != 0 then ( starting_slot[i, d] + j in teacher_availability[i, d] /\ last_slot[i, d] in teacher_availability[i, d]) endif
+)));
 
 
 %A teacher can have a maximum amount of lessons in a week
