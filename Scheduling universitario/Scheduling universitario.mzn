@@ -34,7 +34,7 @@ forall(i in 1..num_teachers) (
 constraint 
 forall(i,j in 1..num_teachers where i < j) (
   forall(d in 1..num_days)(
-     if teacher_availability[i, d] != {}  /\ starting_slot[i,d] != 0 /\ last_slot[i,d] != 0 then (no_overlap(starting_slot[i, d], lesson_durations[i], starting_slot[j, d], lesson_durations[j])) endif
+     if teacher_availability[i, d] != {}  /\ starting_slot[i,d] != 0 /\ last_slot[i,d] != 0 /\ starting_slot[j,d] != 0 /\ last_slot[j,d] != 0 then (no_overlap(starting_slot[i, d], lesson_durations[i], starting_slot[j, d], lesson_durations[j])) endif
  ));
 
 
@@ -47,7 +47,7 @@ starting_slot[i,d]= 0 <-> last_slot[i,d]=0));
 constraint 
 forall(i in 1..num_teachers) (
 forall(d in 1..num_days)(
-forall(j in 0..lesson_durations[i])(
+forall(j in 0..lesson_durations[i]-1)(
       if teacher_availability[i, d] != {}  /\ starting_slot[i,d] != 0 /\ last_slot[i,d] != 0 then ( starting_slot[i, d] + j in teacher_availability[i, d] /\ last_slot[i, d] in teacher_availability[i, d]) endif
 )));
 
